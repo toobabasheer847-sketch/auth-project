@@ -23,8 +23,8 @@ const UserOtp = sequelize.define(
 
     used: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
       allowNull: false,
+      defaultValue: false,
     },
   },
   {

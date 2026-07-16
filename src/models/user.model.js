@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
-
 const User = sequelize.define(
   "User",
   {
@@ -9,6 +8,7 @@ const User = sequelize.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
+      unique: true,
     },
 
     email: {
@@ -32,12 +32,14 @@ const User = sequelize.define(
       allowNull: true,
     },
   },
-
   {
     tableName: "users",
+
+    // Automatically manage only createdAt
     timestamps: true,
+    createdAt: "createdAt",
+    updatedAt: false,
   }
 );
-
 
 export default User;

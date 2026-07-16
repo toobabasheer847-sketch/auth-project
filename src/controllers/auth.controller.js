@@ -19,8 +19,7 @@ export const register = async (
 
   try {
 
-    const result =
-      await registerUser(req.body);
+    const result = await registerUser(req.body);
 
     return successResponse(
       res,
@@ -31,7 +30,17 @@ export const register = async (
 
   } catch (error) {
 
-    next(error);
+    console.error("========== REGISTER ERROR ==========");
+    console.error(error);
+    console.error("Message:", error.message);
+    console.error("Original Error:", error.original);
+    console.error("====================================");
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      databaseError: error.original?.message || null,
+    });
 
   }
 
@@ -49,8 +58,7 @@ export const login = async (
 
   try {
 
-    const result =
-      await loginUser(req.body);
+    const result = await loginUser(req.body);
 
     return successResponse(
       res,
@@ -61,7 +69,17 @@ export const login = async (
 
   } catch (error) {
 
-    next(error);
+    console.error("========== LOGIN ERROR ==========");
+    console.error(error);
+    console.error("Message:", error.message);
+    console.error("Original Error:", error.original);
+    console.error("=================================");
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      databaseError: error.original?.message || null,
+    });
 
   }
 
@@ -79,8 +97,7 @@ export const verifyOtpController = async (
 
   try {
 
-    const result =
-      await verifyOtp(req.body);
+    const result = await verifyOtp(req.body);
 
     return successResponse(
       res,
@@ -91,7 +108,17 @@ export const verifyOtpController = async (
 
   } catch (error) {
 
-    next(error);
+    console.error("========== VERIFY OTP ERROR ==========");
+    console.error(error);
+    console.error("Message:", error.message);
+    console.error("Original Error:", error.original);
+    console.error("======================================");
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      databaseError: error.original?.message || null,
+    });
 
   }
 
