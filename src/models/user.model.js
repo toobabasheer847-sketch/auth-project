@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
+
 const User = sequelize.define(
   "User",
   {
@@ -8,14 +9,12 @@ const User = sequelize.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      unique: true,
     },
 
     email: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
-      unique: true,
     },
 
     phone: {
@@ -33,12 +32,12 @@ const User = sequelize.define(
       allowNull: true,
     },
   },
+
   {
     tableName: "users",
     timestamps: true,
-    createdAt: "createdAt",
-    updatedAt: false,
   }
 );
+
 
 export default User;

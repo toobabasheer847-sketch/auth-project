@@ -5,12 +5,12 @@ import UserOtp from "./userOtp.model.js";
 
 // Relationships
 
-
 // One User -> Many OTPs
 User.hasMany(UserOtp, {
   foreignKey: "userEmail",
   sourceKey: "email",
 });
+
 
 // Every OTP belongs to one User
 UserOtp.belongsTo(User, {
@@ -18,16 +18,10 @@ UserOtp.belongsTo(User, {
   targetKey: "email",
 });
 
-const db = {
+
+
+export {
   sequelize,
   User,
   UserOtp,
 };
-
-export default db;
-
-
-
-
-
-
