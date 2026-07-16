@@ -59,7 +59,6 @@ export const getAllUsers = async () => {
       "email",
       "phone",
       "verifiedAt",
-      "createdAt",
     ],
 
   });
@@ -83,7 +82,6 @@ export const getUserByEmail = async (email) => {
       "email",
       "phone",
       "verifiedAt",
-      "createdAt",
     ],
 
   });

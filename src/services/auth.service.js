@@ -45,7 +45,7 @@ export const registerUser = async ({
   const otp = generateOtp();
 
   await createOtp({
-    userEmail: email,
+    userId: user.id,
     otp,
   });
 

@@ -11,9 +11,15 @@ const UserOtp = sequelize.define(
       allowNull: false,
     },
 
-    userEmail: {
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "users",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
 
     otp: {
@@ -31,7 +37,7 @@ const UserOtp = sequelize.define(
     tableName: "user_otps",
     timestamps: true,
     createdAt: "createdAt",
-    updatedAt: false,
+    updatedAt: "updatedAt",
   }
 );
 

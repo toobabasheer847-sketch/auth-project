@@ -7,15 +7,15 @@ import UserOtp from "./userOtp.model.js";
 
 // One User -> Many OTPs
 User.hasMany(UserOtp, {
-  foreignKey: "userEmail",
-  sourceKey: "email",
+  foreignKey: "userId",
+  sourceKey: "id",
 });
 
 
 // Every OTP belongs to one User
 UserOtp.belongsTo(User, {
-  foreignKey: "userEmail",
-  targetKey: "email",
+  foreignKey: "userId",
+  targetKey: "id",
 });
 
 

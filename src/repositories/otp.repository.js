@@ -7,12 +7,12 @@ export const createOtp = async (otpData) => {
 };
 
 
-// Find OTP by email and otp
-export const findOtp = async (userEmail, otp) => {
+// Find OTP by userId and otp
+export const findOtp = async (userId, otp) => {
 
   return await UserOtp.findOne({
     where: {
-      userEmail,
+      userId,
       otp,
     },
   });
@@ -21,18 +21,16 @@ export const findOtp = async (userEmail, otp) => {
 
 
 // Find latest unused OTP
-export const findLatestUnusedOtp = async (userEmail) => {
+export const findLatestUnusedOtp = async (userId) => {
 
   return await UserOtp.findOne({
 
     where: {
-      userEmail,
+      userId,
       used: false,
     },
 
-    order: [
-      ["createdAt", "DESC"],
-    ],
+    order: [["id", "DESC"]],
 
   });
 
