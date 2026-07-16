@@ -1,7 +1,9 @@
 import {
   registerUser,
   loginUser,
+  verifyOtp,
 } from "../services/auth.service.js";
+
 
 
 // Register Controller
@@ -9,20 +11,27 @@ export const register = async (req, res) => {
 
   try {
 
-    const result = await registerUser(req.body);
+    const result =
+      await registerUser(req.body);
 
 
     return res.status(201).json({
+
       success: true,
+
       data: result,
+
     });
 
 
   } catch (error) {
 
     return res.status(400).json({
+
       success: false,
+
       message: error.message,
+
     });
 
   }
@@ -31,26 +40,79 @@ export const register = async (req, res) => {
 
 
 
+
+
 // Login Controller
 export const login = async (req, res) => {
 
   try {
 
-    const result = await loginUser(req.body);
+    const result =
+      await loginUser(req.body);
 
 
     return res.status(200).json({
+
       success: true,
+
       data: result,
+
     });
 
 
   } catch (error) {
 
     return res.status(400).json({
+
       success: false,
+
       message: error.message,
+
     });
+
+  }
+
+};
+
+
+
+
+
+// Verify OTP Controller
+export const verifyOtpController = async (
+  req,
+  res
+) => {
+
+  try {
+
+
+    const result =
+      await verifyOtp(req.body);
+
+
+
+    return res.status(200).json({
+
+      success: true,
+
+      data: result,
+
+    });
+
+
+
+  } catch (error) {
+
+
+    return res.status(400).json({
+
+      success: false,
+
+      message: error.message,
+
+    });
+
 
   }
 

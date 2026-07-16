@@ -4,11 +4,16 @@ import jwt from "jsonwebtoken";
 import {
   createUser,
   findUserByEmail,
+  verifyUser,
 } from "../repositories/user.repository.js";
+
 
 import {
   createOtp,
+  findLatestUnusedOtp,
+  markOtpAsUsed,
 } from "../repositories/otp.repository.js";
+
 
 
 // Register Service
@@ -18,11 +23,16 @@ export const registerUser = async ({
   password,
 }) => {
 
+
   const existingUser = await findUserByEmail(email);
 
+
   if (existingUser) {
-    throw new Error("Email already registered");
+    throw new Error(
+      "Email already registered"
+    );
   }
+
 
 
   const hashedPassword = await bcrypt.hash(
@@ -31,11 +41,15 @@ export const registerUser = async ({
   );
 
 
+
   const user = await createUser({
+
     email,
     phone,
     password: hashedPassword,
+
   });
+
 
 
   const otp = Math.floor(
@@ -43,18 +57,28 @@ export const registerUser = async ({
   ).toString();
 
 
+
   await createOtp({
+
     userEmail: email,
     otp,
+
   });
 
 
+
   return {
-    message: "Registration successful. OTP sent.",
+
+    message:
+    "Registration successful. OTP sent.",
+
     email: user.email,
+
   };
 
 };
+
+
 
 
 
@@ -65,19 +89,22 @@ export const loginUser = async ({
 }) => {
 
 
-  // 1. Find user by email
-  const user = await findUserByEmail(email);
+
+  const user =
+    await findUserByEmail(email);
+
 
 
   if (!user) {
+
     throw new Error(
       "Invalid email or password"
     );
+
   }
 
 
 
-  // 2. Compare password
 
   const isPasswordValid =
     await bcrypt.compare(
@@ -86,47 +113,141 @@ export const loginUser = async ({
     );
 
 
+
   if (!isPasswordValid) {
+
     throw new Error(
       "Invalid email or password"
     );
+
   }
 
 
 
-  // 3. Check email verification
+
 
   if (!user.verifiedAt) {
+
     throw new Error(
       "Please verify your email first"
     );
+
   }
 
 
 
-  // 4. Generate JWT Token
+
 
   const token = jwt.sign(
+
     {
       email: user.email,
     },
 
+
     process.env.JWT_SECRET,
+
 
     {
       expiresIn: "1d",
     }
+
   );
 
 
 
+
+
   return {
-    message: "Login successful",
+
+    message:
+    "Login successful",
+
+
     token,
+
+
     user: {
+
       email: user.email,
+
       phone: user.phone,
+
     },
+
   };
+
+
+};
+
+
+
+
+
+
+// Verify OTP Service
+export const verifyOtp = async ({
+  email,
+  otp,
+}) => {
+
+
+  // 1. Find latest unused OTP
+
+  const storedOtp =
+    await findLatestUnusedOtp(email);
+
+
+
+  if (!storedOtp) {
+
+    throw new Error(
+      "OTP not found or already used"
+    );
+
+  }
+
+
+
+
+  // 2. Compare OTP
+
+  if (storedOtp.otp !== otp) {
+
+    throw new Error(
+      "Invalid OTP"
+    );
+
+  }
+
+
+
+
+
+  // 3. Mark OTP as used
+
+  await markOtpAsUsed(
+    storedOtp.id
+  );
+
+
+
+
+
+  // 4. Verify User
+
+  await verifyUser(email);
+
+
+
+
+
+  return {
+
+    message:
+    "OTP verified successfully",
+
+  };
+
 
 };
