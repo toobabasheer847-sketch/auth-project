@@ -35,10 +35,9 @@ const User = sequelize.define(
   {
     tableName: "users",
 
-    // Automatically manage only createdAt
     timestamps: true,
     createdAt: "createdAt",
-    updatedAt: false,
+    updatedAt: "updatedAt",
   }
 );
 

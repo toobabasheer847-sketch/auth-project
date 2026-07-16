@@ -1,48 +1,56 @@
-export async function up(queryInterface, Sequelize) {
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
-  await queryInterface.createTable("users", {
 
+const User = sequelize.define(
+  "User",
+  {
     id: {
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
     },
 
+
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
     },
 
+
     phone: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
+
 
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
 
-    createdAt: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW,
-    },
 
     verifiedAt: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       allowNull: true,
-    }
+    },
 
-  });
-
-}
+  },
 
 
-export async function down(queryInterface) {
+  {
+    tableName: "users",
 
-  await queryInterface.dropTable("users");
+    // Sequelize automatically handles createdAt and updatedAt
+    timestamps: true,
 
-}
+    createdAt: "createdAt",
+
+    updatedAt: "updatedAt",
+  }
+);
+
+
+export default User;
