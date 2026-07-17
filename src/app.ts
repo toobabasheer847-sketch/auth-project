@@ -1,8 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import authRoutes from "./modules/auth/routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./auth/routes/auth.routes.js";
 
 const app = express();
 
@@ -13,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/users", authRoutes);
 
 // 404 Route Handler
 app.use((req, res) => {
