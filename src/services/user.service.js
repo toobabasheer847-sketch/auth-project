@@ -3,7 +3,7 @@ import {
   getUserByEmail,
   updateUser,
   deleteUser,
-} from "../repositories/user.repository.js";
+} from "../modules/auth/repositories/user.repository.js";
 
 import bcrypt from "bcrypt";
 
