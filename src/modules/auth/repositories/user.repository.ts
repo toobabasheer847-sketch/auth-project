@@ -1,0 +1,142 @@
+import { User } from "../../../models/index.js";
+import type {
+  UserCreationAttributes,
+  UserModel,
+} from "../../../models/user.model.js";
+
+
+// Create User
+export const createUser = async (
+  userData: UserCreationAttributes
+): Promise<UserModel> => {
+
+  return await User.create(userData);
+
+};
+
+
+
+
+// Find User By Email
+export const findUserByEmail = async (
+  email: string
+): Promise<UserModel | null> => {
+
+  return await User.findOne({
+
+    where: {
+      email,
+    },
+
+  });
+
+};
+
+
+
+
+// Verify User After OTP Verification
+export const verifyUser = async (
+  email: string
+) => {
+
+  return await User.update(
+
+    {
+      verifiedAt: new Date(),
+    },
+
+    {
+      where: {
+        email,
+      },
+    }
+
+  );
+
+};
+
+
+
+
+// Get All Users
+export const getAllUsers = async () => {
+
+  return await User.findAll({
+
+    attributes: [
+      "id",
+      "email",
+      "phone",
+      "verifiedAt",
+    ],
+
+  });
+
+};
+
+
+
+
+// Get Single User By Email
+export const getUserByEmail = async (
+  email: string
+): Promise<UserModel | null> => {
+
+  return await User.findOne({
+
+    where: {
+      email,
+    },
+
+    attributes: [
+      "id",
+      "email",
+      "phone",
+      "verifiedAt",
+    ],
+
+  });
+
+};
+
+
+
+
+// Update User
+export const updateUser = async (
+  email: string,
+  updateData: Record<string, any>
+) => {
+
+  return await User.update(
+
+    updateData,
+
+    {
+      where: {
+        email,
+      },
+    }
+
+  );
+
+};
+
+
+
+
+// Delete User
+export const deleteUser = async (
+  email: string
+) => {
+
+  return await User.destroy({
+
+    where: {
+      email,
+    },
+
+  });
+
+};
